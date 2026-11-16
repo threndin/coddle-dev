@@ -1,69 +1,75 @@
 import Image from "next/image";
+import { Icon } from "./icons";
+import { ThemeToggle } from "./theme-toggle";
+
+const coddleUrl = "https://usecoddle.com";
+
+const products = [
+  { name: "Coddle", category: "AI ASSISTANT", summary: "Ask questions, shape ideas, and get help with everyday tasks.", url: coddleUrl, icon: "spark", action: "Visit Coddle", color: "orange" },
+  { name: "Coddle Workspace", category: "TEAM COLLABORATION", summary: "Give your team one place to share notes, organize tasks, and work together.", url: "https://workspace.usecoddle.com", icon: "workspace", action: "Open Workspace", color: "blue" },
+  { name: "Coddle Learn", category: "LEARN TECH", summary: "Build technical skills through roadmaps, coding practice, and hands-on projects.", url: "https://learn.usecoddle.com", icon: "learn", action: "Explore Learn", color: "green" },
+] as const;
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
+    <>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <header className="site-header">
+        <div className="wrap header-inner">
+          <a className="brand" href="/" aria-label="Coddle Developers home">
+            <Image src="/coddle-mark.png" className="brand-mark" width={24} height={25} alt="" />
+            <span>Coddle<span className="brand-divider" aria-hidden="true">/</span><span className="brand-section">Developers</span></span>
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          <div className="header-actions">
+            <nav aria-label="Main navigation"><a href="#ecosystem">Ecosystem</a></nav>
+            <ThemeToggle />
+          </div>
         </div>
+      </header>
+
+      <main id="main" className="wrap">
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="hero-art" aria-hidden="true" />
+          <div className="hero-content">
+            <div className="hero-label"><span /> DEVELOPER HUB</div>
+            <h1 id="hero-title">Build with<br /><em>Coddle.</em></h1>
+            <p>Your starting point for building, collaborating, and learning across the Coddle ecosystem.</p>
+            <a className="hero-cta" href="#ecosystem">Explore the ecosystem <Icon name="arrow-down" size={17} /></a>
+          </div>
+          <span className="hero-index" aria-hidden="true">CODDLE.DEV <span>//</span> 01</span>
+        </section>
+
+        <section className="ecosystem" id="ecosystem" aria-labelledby="ecosystem-title">
+          <div className="section-label"><span /> THE ECOSYSTEM</div>
+          <div className="section-intro">
+            <h2 id="ecosystem-title">Find your starting point.</h2>
+            <p>Three products to help you think through ideas, work with others, and build new skills.</p>
+          </div>
+          <ul className="products">
+            {products.map((product, index) => (
+              <li key={product.name}>
+                <a className={`product ${product.color}`} href={product.url}>
+                  <div className="card-top">
+                    <span className="product-icon"><Icon name={product.icon} size={23} /></span>
+                    <span className="card-index" aria-hidden="true">0{index + 1}</span>
+                  </div>
+                  <span className="product-category">{product.category}</span>
+                  <h3>{product.name}</h3>
+                  <p>{product.summary}</p>
+                  <span className="product-action">{product.action} <Icon name="arrow-up" size={15} /></span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
-    </div>
+
+      <footer className="site-footer">
+        <div className="wrap footer-inner">
+          <span><span className="footer-code" aria-hidden="true">&lt;/&gt;</span> Coddle Developers</span>
+          <a href={coddleUrl}>usecoddle.com <Icon name="arrow-up" size={14} /></a>
+        </div>
+      </footer>
+    </>
   );
 }
